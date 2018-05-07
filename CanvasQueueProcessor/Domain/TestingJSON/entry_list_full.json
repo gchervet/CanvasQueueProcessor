@@ -1,0 +1,33 @@
+﻿{
+    "entries": {
+        "entry": [
+          {
+            "attempt": 1,
+            "enrollmentId": 25545,
+            "points_possible": 100,
+            "grade": 62,
+            "activity_name": "Examen final [EF]",
+            "graded_at": "2017-11-20T19:11:04.122-05:00",
+            "submitted_at": "2017-11-20T19:11:04.048-05:00"
+          },
+            {
+                "attempt": 1,
+                "enrollmentId": 29633,
+                "points_possible": 100,
+                "grade": 41.6666666666667,
+                "activity_name": "Trabajo práctico 1 [TP1]",
+                "graded_at": "2017-11-20T19:17:02.964-05:00",
+                "submitted_at": null
+            },
+            {
+                "attempt": 3,
+                "enrollmentId": 35345,
+                "points_possible": null,
+                "grade": 0,
+                "activity_name": "Encuesta [ENC]",
+                "graded_at": "2017-11-20T19:17:42.401-05:00",
+                "submitted_at": "2017-11-20T19:17:42.353-05:00"
+            }
+        ]
+    }
+}

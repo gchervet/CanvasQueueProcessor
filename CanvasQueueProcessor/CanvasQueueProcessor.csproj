@@ -32,11 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.4.1.1\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,17 +57,59 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DAL\UniCanvasNotasDAL.cs" />
+    <Compile Include="Data\uniCanvasNotas.cs">
+      <DependentUpon>UniModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UniModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UniModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\UniModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UniModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Domain\DTO\EntryDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueConsumer.cs" />
+    <Compile Include="Service\EntryService.cs" />
     <Compile Include="TopicConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Data\UniModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UniModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\UniModel.edmx.diagram">
+      <DependentUpon>UniModel.edmx</DependentUpon>
+    </None>
+    <None Include="Domain\TestingJSON\entry_list_empty.json" />
+    <None Include="Domain\TestingJSON\entry_list_full.json" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Domain\DTO\" />
+    <Content Include="Data\UniModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>UniModel.Context.cs</LastGenOutput>
+      <DependentUpon>UniModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Data\UniModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UniModel.edmx</DependentUpon>
+      <LastGenOutput>UniModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

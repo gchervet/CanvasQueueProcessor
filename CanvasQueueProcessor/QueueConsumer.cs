@@ -4,10 +4,14 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.IO;
 using System.Configuration;
+using CanvasQueueProcessor.Domain.DTO;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using CanvasQueueProcessor.Service;
 
 namespace CanvasQueueProcessor
 {
-    class QueueConsumerExample
+    public class QueueConsumerExample
     {
 
         string queueName = ConfigurationSettings.AppSettings.Get("queueName");
@@ -20,17 +24,21 @@ namespace CanvasQueueProcessor
 
         public static void Main(string[] args)
         {
+            /* PRODUCTIVE */
             /*
-            string[] separators = { "[", "]"};
-            string value = "Ejemplo [EJ]";
-            string[] words = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var word in words)
-                Console.WriteLine(word);
-            */
-
             QueueConsumerExample qConsumer = new QueueConsumerExample();
             //qConsumer.GetMessage();
             qConsumer.Register();
+            */
+
+            /* TESTING (local JSON) */
+            using (StreamReader r = new StreamReader("../../Domain/TestingJSON/entry_list_full.json"))
+            {
+                string jsonString = r.ReadToEnd();
+                EntryDTO jsonObject = JsonConvert.DeserializeObject<EntryDTO>(jsonString);
+
+                EntryService.CreateNotaEntry(jsonObject.entries);
+            }
         }
 
         public void Register()

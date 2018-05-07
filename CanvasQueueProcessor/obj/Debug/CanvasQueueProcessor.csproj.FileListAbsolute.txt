@@ -8,3 +8,9 @@ c:\users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Deb
 c:\users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\obj\Debug\CanvasQueueProcessor.csproj.CopyComplete
 c:\users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\obj\Debug\CanvasQueueProcessor.exe
 c:\users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\obj\Debug\CanvasQueueProcessor.pdb
+C:\Users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Debug\EntityFramework.dll
+C:\Users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Debug\Newtonsoft.Json.dll
+C:\Users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Debug\EntityFramework.xml
+C:\Users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\gchervet\Source\Repos\CanvasQueueProcessor\CanvasQueueProcessor\bin\Debug\Newtonsoft.Json.xml
