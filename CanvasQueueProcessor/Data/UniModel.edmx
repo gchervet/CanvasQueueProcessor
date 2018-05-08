@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="uniCanvasNotas">
           <Key>
             <PropertyRef Name="ID" />
@@ -14,20 +14,24 @@
           <Property Name="EnrollmentId" Type="bigint" />
           <Property Name="Points_possible" Type="decimal" Precision="5" Scale="2" />
           <Property Name="Grade" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="Activity" Type="varchar" MaxLength="10" />
+          <Property Name="Activity" Type="varchar" MaxLength="50" />
           <Property Name="Graded_at" Type="datetime" />
           <Property Name="Submitted_at" Type="datetime" />
           <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="TipoEvaluacion" Type="varchar" MaxLength="10" />
+          <Property Name="Nota" Type="decimal" Precision="4" Scale="2" />
           <Property Name="Procesado" Type="bit" />
         </EntityType>
         <EntityContainer Name="UniModelStoreContainer">
           <EntitySet Name="uniCanvasNotas" EntityType="Self.uniCanvasNotas" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UniModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="dev_UniEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="uniCanvasNotas" EntityType="UniModel.uniCanvasNotas" />
+        </EntityContainer>
         <EntityType Name="uniCanvasNotas">
           <Key>
             <PropertyRef Name="ID" />
@@ -37,15 +41,14 @@
           <Property Name="EnrollmentId" Type="Int64" />
           <Property Name="Points_possible" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="Grade" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="Activity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Activity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Graded_at" Type="DateTime" Precision="3" />
           <Property Name="Submitted_at" Type="DateTime" Precision="3" />
           <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="TipoEvaluacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nota" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="Procesado" Type="Boolean" />
         </EntityType>
-        <EntityContainer Name="dev_UniEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="uniCanvasNotas" EntityType="Self.uniCanvasNotas" />
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -55,16 +58,18 @@
           <EntitySetMapping Name="uniCanvasNotas">
             <EntityTypeMapping TypeName="UniModel.uniCanvasNotas">
               <MappingFragment StoreEntitySet="uniCanvasNotas">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Attempt" ColumnName="Attempt" />
-                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
-                <ScalarProperty Name="Points_possible" ColumnName="Points_possible" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Activity" ColumnName="Activity" />
-                <ScalarProperty Name="Graded_at" ColumnName="Graded_at" />
-                <ScalarProperty Name="Submitted_at" ColumnName="Submitted_at" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Procesado" ColumnName="Procesado" />
+                <ScalarProperty Name="Nota" ColumnName="Nota" />
+                <ScalarProperty Name="TipoEvaluacion" ColumnName="TipoEvaluacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Submitted_at" ColumnName="Submitted_at" />
+                <ScalarProperty Name="Graded_at" ColumnName="Graded_at" />
+                <ScalarProperty Name="Activity" ColumnName="Activity" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Points_possible" ColumnName="Points_possible" />
+                <ScalarProperty Name="EnrollmentId" ColumnName="EnrollmentId" />
+                <ScalarProperty Name="Attempt" ColumnName="Attempt" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

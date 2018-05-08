@@ -23,6 +23,8 @@ namespace CanvasQueueProcessor.Data
         public Nullable<System.DateTime> Graded_at { get; set; }
         public Nullable<System.DateTime> Submitted_at { get; set; }
         public Nullable<System.DateTime> FechaCreacion { get; set; }
+        public string TipoEvaluacion { get; set; }
+        public Nullable<decimal> Nota { get; set; }
         public Nullable<bool> Procesado { get; set; }
     }
 }

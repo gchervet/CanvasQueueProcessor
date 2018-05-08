@@ -9,9 +9,10 @@ namespace CanvasQueueProcessor.Data.DAL
 {
     public class UniCanvasNotasDAL
     {
-        public static void Create(Entry entry)
+        public static bool Create(Entry entry, string tipoEvaluacion, decimal? nota)
         {
-            if (entry != null)
+            // 
+            if (entry != null && tipoEvaluacion != null)
             {
                 using (var context = new dev_UniEntities())
                 {
@@ -24,14 +25,26 @@ namespace CanvasQueueProcessor.Data.DAL
                     uniCanvasNotasToAdd.Grade = (decimal)entry.grade;
                     uniCanvasNotasToAdd.Graded_at = entry.graded_at;
                     uniCanvasNotasToAdd.Points_possible = entry.points_possible;
-                    uniCanvasNotasToAdd.Procesado = true;
+                    uniCanvasNotasToAdd.Procesado = false;
                     uniCanvasNotasToAdd.Submitted_at = entry.submitted_at;
+                    uniCanvasNotasToAdd.TipoEvaluacion = tipoEvaluacion;
+                    uniCanvasNotasToAdd.Nota = nota;
 
                     context.uniCanvasNotas.Add(uniCanvasNotasToAdd);
 
-                    context.SaveChanges();
+                    try
+                    {
+                        context.SaveChanges();
+                        return true;
+                    }
+                    catch(Exception e)
+                    {
+                        return false;
+                    }
+
                 }
             }
+            return false;
         }
     }
 }
