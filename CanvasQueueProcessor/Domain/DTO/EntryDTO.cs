@@ -18,10 +18,10 @@ namespace CanvasQueueProcessor.Domain.DTO
 
     public class Entry
     {
-        public int attempt { get; set; }
-        public int enrollmentId { get; set; }
-        public int? points_possible { get; set; }
-        public float grade { get; set; }
+        public int? attempt { get; set; }
+        public int? enrollmentId { get; set; }
+        public decimal? points_possible { get; set; }
+        public decimal? grade { get; set; }
         public string activity_name { get; set; }
         public DateTime graded_at { get; set; }
         public DateTime? submitted_at { get; set; }

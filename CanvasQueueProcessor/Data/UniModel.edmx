@@ -21,6 +21,7 @@
           <Property Name="TipoEvaluacion" Type="varchar" MaxLength="10" />
           <Property Name="Nota" Type="decimal" Precision="4" Scale="2" />
           <Property Name="Procesado" Type="bit" />
+          <Property Name="Mensaje" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityContainer Name="UniModelStoreContainer">
           <EntitySet Name="uniCanvasNotas" EntityType="Self.uniCanvasNotas" Schema="dbo" store:Type="Tables" />
@@ -48,6 +49,7 @@
           <Property Name="TipoEvaluacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Nota" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="Procesado" Type="Boolean" />
+          <Property Name="Mensaje" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -58,6 +60,7 @@
           <EntitySetMapping Name="uniCanvasNotas">
             <EntityTypeMapping TypeName="UniModel.uniCanvasNotas">
               <MappingFragment StoreEntitySet="uniCanvasNotas">
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
                 <ScalarProperty Name="Procesado" ColumnName="Procesado" />
                 <ScalarProperty Name="Nota" ColumnName="Nota" />
                 <ScalarProperty Name="TipoEvaluacion" ColumnName="TipoEvaluacion" />

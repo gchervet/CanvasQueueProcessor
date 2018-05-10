@@ -26,5 +26,6 @@ namespace CanvasQueueProcessor.Data
         public string TipoEvaluacion { get; set; }
         public Nullable<decimal> Nota { get; set; }
         public Nullable<bool> Procesado { get; set; }
+        public string Mensaje { get; set; }
     }
 }

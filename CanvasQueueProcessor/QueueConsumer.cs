@@ -25,20 +25,20 @@ namespace CanvasQueueProcessor
         public static void Main(string[] args)
         {
             /* PRODUCTIVE */
-            /*
+            
             QueueConsumerExample qConsumer = new QueueConsumerExample();
             //qConsumer.GetMessage();
             qConsumer.Register();
-            */
-
+            
             /* TESTING (local JSON) */
-            using (StreamReader r = new StreamReader("../../Domain/TestingJSON/entry_list_full.json"))
-            {
-                string jsonString = r.ReadToEnd();
-                EntryDTO jsonObject = JsonConvert.DeserializeObject<EntryDTO>(jsonString);
-
-                EntryService.CreateNotaEntry(jsonObject.entries);
-            }
+            //using (StreamReader r = new StreamReader("../../Domain/TestingJSON/entry_list_full.json"))
+            //{
+            //    string jsonString = r.ReadToEnd();
+            //    EntryDTO jsonObject = JsonConvert.DeserializeObject<EntryDTO>(jsonString);
+            //
+            //    EntryService.CreateNotaEntry(jsonObject.entries);
+            //}
+            
         }
 
         public void Register()
@@ -61,52 +61,32 @@ namespace CanvasQueueProcessor
             factory.Protocol = protocol;
             IConnection conn = factory.CreateConnection();
             IModel channel = conn.CreateModel();
+
+            //uint messageCount = GetMessageCount(factory, queueName);
             var consumer = new EventingBasicConsumer(channel);
 
             consumer.Received += (ch, ea) =>
             {
                 var body = ea.Body;
                 string message = Encoding.UTF8.GetString(body);
-                Console.WriteLine("Received Message : " + message);
+                EntryDTO result = JsonConvert.DeserializeObject<EntryDTO>(message);
 
-                ////////////////////////////////////////////////////
-                try
-                {
-                    ostrm = new FileStream(fileToGenerate, FileMode.OpenOrCreate, FileAccess.Write);
-                    writer = new StreamWriter(ostrm);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Cannot open Redirect.txt for writing");
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                Console.SetOut(writer);
-                Console.Write(message);
-                Console.WriteLine("This is a line of text");
-                Console.WriteLine("Everything written to Console.Write() or");
-                Console.WriteLine("Console.WriteLine() will be written to a file");
-                Console.SetOut(oldOut);
-                writer.Close();
-                ostrm.Close();
-                Console.WriteLine("Done");
-                /////////////////////////////////////////////////////////
-                //                        if (!File.Exists(path))
-                //                        {
-                //                            File.Create(path);
-                //                            //.WriteAllText(path, message);
-                //                        }
-                //                        else if (File.Exists(path))
-                //                        {
-                //                            tw = new StreamWriter(path);
-                //                            //File.WriteAllText(path, message);
-                //                        }
-                channel.BasicAck(ea.DeliveryTag, false);
+                EntryService.CreateNotaEntry(result.entries);
+                    
+                //channel.BasicAck(ea.DeliveryTag, false);
             };
+
             String consumerTag = channel.BasicConsume(queueName, false, consumer);
-
-
-
+            //messageCount = GetMessageCount(factory, queueName);
+        }
+        
+        public uint GetMessageCount(ConnectionFactory factory, string queueName)
+        {
+            using (IConnection connection = factory.CreateConnection())
+            using (IModel channel = connection.CreateModel())
+            {
+                return channel.MessageCount(queueName);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace CanvasQueueProcessor.Data.DAL
 {
     public class UniCanvasNotasDAL
     {
-        public static bool Create(Entry entry, string tipoEvaluacion, decimal? nota)
+        public static bool Create(Entry entry, string tipoEvaluacion, decimal? nota, string mensaje)
         {
             // 
             if (entry != null && tipoEvaluacion != null)
@@ -22,13 +22,14 @@ namespace CanvasQueueProcessor.Data.DAL
                     uniCanvasNotasToAdd.Attempt = entry.attempt;
                     uniCanvasNotasToAdd.EnrollmentId = entry.enrollmentId;
                     uniCanvasNotasToAdd.FechaCreacion = DateTime.Now;
-                    uniCanvasNotasToAdd.Grade = (decimal)entry.grade;
+                    uniCanvasNotasToAdd.Grade = entry.grade;
                     uniCanvasNotasToAdd.Graded_at = entry.graded_at;
                     uniCanvasNotasToAdd.Points_possible = entry.points_possible;
                     uniCanvasNotasToAdd.Procesado = false;
                     uniCanvasNotasToAdd.Submitted_at = entry.submitted_at;
-                    uniCanvasNotasToAdd.TipoEvaluacion = tipoEvaluacion;
+                    uniCanvasNotasToAdd.TipoEvaluacion = tipoEvaluacion.Trim();
                     uniCanvasNotasToAdd.Nota = nota;
+                    uniCanvasNotasToAdd.Mensaje = mensaje;
 
                     context.uniCanvasNotas.Add(uniCanvasNotasToAdd);
 
