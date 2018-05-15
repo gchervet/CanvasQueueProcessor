@@ -38,7 +38,6 @@ namespace CanvasQueueProcessor
             //
             //    EntryService.CreateNotaEntry(jsonObject.entries);
             //}
-            
         }
 
         public void Register()
@@ -62,7 +61,7 @@ namespace CanvasQueueProcessor
             IConnection conn = factory.CreateConnection();
             IModel channel = conn.CreateModel();
 
-            //uint messageCount = GetMessageCount(factory, queueName);
+            uint messageCount = GetMessageCount(factory, queueName);
             var consumer = new EventingBasicConsumer(channel);
 
             consumer.Received += (ch, ea) =>
@@ -71,13 +70,13 @@ namespace CanvasQueueProcessor
                 string message = Encoding.UTF8.GetString(body);
                 EntryDTO result = JsonConvert.DeserializeObject<EntryDTO>(message);
 
-                EntryService.CreateNotaEntry(result.entries);
-                    
-                //channel.BasicAck(ea.DeliveryTag, false);
+                if(EntryService.CreateNotaEntry(result.entries))
+                {
+                    //channel.BasicAck(ea.DeliveryTag, false);
+                }
             };
 
             String consumerTag = channel.BasicConsume(queueName, false, consumer);
-            //messageCount = GetMessageCount(factory, queueName);
         }
         
         public uint GetMessageCount(ConnectionFactory factory, string queueName)

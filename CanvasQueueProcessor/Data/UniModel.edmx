@@ -14,15 +14,18 @@
           <Property Name="EnrollmentId" Type="bigint" />
           <Property Name="Points_possible" Type="decimal" Precision="5" Scale="2" />
           <Property Name="Grade" Type="decimal" Precision="5" Scale="2" />
-          <Property Name="Activity" Type="varchar" MaxLength="50" />
+          <Property Name="Activity" Type="varchar" MaxLength="255" />
           <Property Name="Graded_at" Type="datetime" />
           <Property Name="Submitted_at" Type="datetime" />
           <Property Name="FechaCreacion" Type="datetime" />
-          <Property Name="TipoEvaluacion" Type="varchar" MaxLength="10" />
+          <Property Name="TipoEvaluacion" Type="varchar" MaxLength="255" />
           <Property Name="Nota" Type="decimal" Precision="4" Scale="2" />
           <Property Name="Procesado" Type="bit" />
           <Property Name="Mensaje" Type="varchar" MaxLength="255" />
         </EntityType>
+        <Function Name="sp_uni_canvas_delete_from_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fromId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="UniModelStoreContainer">
           <EntitySet Name="uniCanvasNotas" EntityType="Self.uniCanvasNotas" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -31,6 +34,9 @@
     <edmx:ConceptualModels>
       <Schema Namespace="UniModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="dev_UniEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_uni_canvas_delete_from_ID">
+          <Parameter Name="fromId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="uniCanvasNotas" EntityType="UniModel.uniCanvasNotas" />
         </EntityContainer>
         <EntityType Name="uniCanvasNotas">
@@ -42,11 +48,11 @@
           <Property Name="EnrollmentId" Type="Int64" />
           <Property Name="Points_possible" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="Grade" Type="Decimal" Precision="5" Scale="2" />
-          <Property Name="Activity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activity" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Graded_at" Type="DateTime" Precision="3" />
           <Property Name="Submitted_at" Type="DateTime" Precision="3" />
           <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
-          <Property Name="TipoEvaluacion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TipoEvaluacion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Nota" Type="Decimal" Precision="4" Scale="2" />
           <Property Name="Procesado" Type="Boolean" />
           <Property Name="Mensaje" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
@@ -57,6 +63,7 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="UniModelStoreContainer" CdmEntityContainer="dev_UniEntities">
+          <FunctionImportMapping FunctionImportName="sp_uni_canvas_delete_from_ID" FunctionName="UniModel.Store.sp_uni_canvas_delete_from_ID" />
           <EntitySetMapping Name="uniCanvasNotas">
             <EntityTypeMapping TypeName="UniModel.uniCanvasNotas">
               <MappingFragment StoreEntitySet="uniCanvasNotas">

@@ -12,6 +12,8 @@ namespace CanvasQueueProcessor.Data
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class dev_UniEntities : DbContext
     {
@@ -26,5 +28,14 @@ namespace CanvasQueueProcessor.Data
         }
     
         public virtual DbSet<uniCanvasNotas> uniCanvasNotas { get; set; }
+    
+        public virtual int sp_uni_canvas_delete_from_ID(Nullable<int> fromId)
+        {
+            var fromIdParameter = fromId.HasValue ?
+                new ObjectParameter("fromId", fromId) :
+                new ObjectParameter("fromId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_uni_canvas_delete_from_ID", fromIdParameter);
+        }
     }
 }
