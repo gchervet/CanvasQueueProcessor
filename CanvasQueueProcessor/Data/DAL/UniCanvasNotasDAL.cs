@@ -18,7 +18,7 @@ namespace CanvasQueueProcessor.Data.DAL
                 {
                     rtn = (int?)context.uniCanvasNotas.Max(x => x.ID);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     rtn = 0;
                 }
@@ -81,6 +81,27 @@ namespace CanvasQueueProcessor.Data.DAL
             using (var context = new dev_UniEntities())
             {
                 context.sp_uni_canvas_delete_from_ID(pkID);
+            }
+        }
+
+        public static void CreateAuditoria(int cantNotas)
+        {
+            using (var context = new dev_UniEntities())
+            {
+                uniCanvasNotasAuditoria uniCanvasNotasAuditoriaToAdd = new uniCanvasNotasAuditoria();
+                uniCanvasNotasAuditoriaToAdd.FechaCreacion = DateTime.Now;
+                uniCanvasNotasAuditoriaToAdd.CantNotas = cantNotas;
+
+                context.uniCanvasNotasAuditoria.Add(uniCanvasNotasAuditoriaToAdd);
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch(Exception e)
+                {
+
+                }
             }
         }
     }

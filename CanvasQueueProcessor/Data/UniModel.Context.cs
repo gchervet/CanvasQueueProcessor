@@ -28,6 +28,7 @@ namespace CanvasQueueProcessor.Data
         }
     
         public virtual DbSet<uniCanvasNotas> uniCanvasNotas { get; set; }
+        public virtual DbSet<uniCanvasNotasAuditoria> uniCanvasNotasAuditoria { get; set; }
     
         public virtual int sp_uni_canvas_delete_from_ID(Nullable<int> fromId)
         {

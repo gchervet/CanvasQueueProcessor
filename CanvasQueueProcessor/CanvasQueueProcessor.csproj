@@ -61,6 +61,9 @@
     <Compile Include="Data\uniCanvasNotas.cs">
       <DependentUpon>UniModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\uniCanvasNotasAuditoria.cs">
+      <DependentUpon>UniModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\UniModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

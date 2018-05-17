@@ -70,9 +70,11 @@ namespace CanvasQueueProcessor
                 string message = Encoding.UTF8.GetString(body);
                 EntryDTO result = JsonConvert.DeserializeObject<EntryDTO>(message);
 
-                if(EntryService.CreateNotaEntry(result.entries))
+                EntryService.CreateAuditoria(result.entries);
+
+                if (EntryService.CreateNotaEntry(result.entries))
                 {
-                    //channel.BasicAck(ea.DeliveryTag, false);
+                    channel.BasicAck(ea.DeliveryTag, false);
                 }
             };
 

@@ -27,7 +27,7 @@ namespace CanvasQueueProcessor.Service
                     string[] words = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
                     string tipoActividadString = string.Empty;
 
-                    if(words.Length > 1)
+                    if (words.Length > 1)
                     {
                         tipoActividadString = words.LastOrDefault();
                     }
@@ -73,6 +73,16 @@ namespace CanvasQueueProcessor.Service
         public static void RollBackFromId(int pkID)
         {
             UniCanvasNotasDAL.RollBackFromId(pkID);
+        }
+
+        internal static void CreateAuditoria(Entries entries)
+        {
+            int cantNotas = 0;
+            if (entries != null)
+            {
+                cantNotas = entries.entry.Count();
+            }
+            UniCanvasNotasDAL.CreateAuditoria(cantNotas);
         }
     }
 }
