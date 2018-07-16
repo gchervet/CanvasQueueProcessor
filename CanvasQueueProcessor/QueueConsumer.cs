@@ -25,11 +25,11 @@ namespace CanvasQueueProcessor
         public static void Main(string[] args)
         {
             /* PRODUCTIVE */
-            
+
             QueueConsumerExample qConsumer = new QueueConsumerExample();
             //qConsumer.GetMessage();
-            qConsumer.Register();
-            
+            Environment.Exit(qConsumer.Register());
+
             /* TESTING (local JSON) */
             //using (StreamReader r = new StreamReader("../../Domain/TestingJSON/entry_list_full.json"))
             //{
@@ -40,7 +40,7 @@ namespace CanvasQueueProcessor
             //}
         }
 
-        public void Register()
+        public int Register()
         {
             //Setup the connection with the message broker
 
@@ -62,25 +62,42 @@ namespace CanvasQueueProcessor
             IModel channel = conn.CreateModel();
 
             uint messageCount = GetMessageCount(factory, queueName);
-            var consumer = new EventingBasicConsumer(channel);
 
-            consumer.Received += (ch, ea) =>
+            EntryService.CreateGeneralAuditoria(Environment.MachineName, Environment.UserName, messageCount);
+
+            if (messageCount == 0)
             {
-                var body = ea.Body;
-                string message = Encoding.UTF8.GetString(body);
-                EntryDTO result = JsonConvert.DeserializeObject<EntryDTO>(message);
+                return 0;
+            }
+            else
+            {
+                int messageCountIndex = 0;
+                var consumer = new EventingBasicConsumer(channel);
 
-                EntryService.CreateAuditoria(result.entries);
-
-                if (EntryService.CreateNotaEntry(result.entries))
+                consumer.Received += (ch, ea) =>
                 {
-                    channel.BasicAck(ea.DeliveryTag, false);
-                }
-            };
+                    var body = ea.Body;
+                    string message = Encoding.UTF8.GetString(body);
+                    EntryDTO result = JsonConvert.DeserializeObject<EntryDTO>(message);
 
-            String consumerTag = channel.BasicConsume(queueName, false, consumer);
+                    EntryService.CreateEntryAuditoria(Environment.MachineName, Environment.UserName, result.entries);
+
+                    if (EntryService.CreateNotaEntry(result.entries))
+                    {
+                        channel.BasicAck(ea.DeliveryTag, false);
+                    }
+                    messageCountIndex++;
+                };
+
+                if (messageCountIndex == messageCount)
+                {
+                    return 0;
+                }
+                String consumerTag = channel.BasicConsume(queueName, false, consumer);
+            }
+            return 0;
         }
-        
+
         public uint GetMessageCount(ConnectionFactory factory, string queueName)
         {
             using (IConnection connection = factory.CreateConnection())

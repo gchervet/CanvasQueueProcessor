@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="uniCanvasColaAuditoria">
+          <Key>
+            <PropertyRef Name="IdColaAuditoria" />
+          </Key>
+          <Property Name="IdColaAuditoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="CantMensajes" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="255" />
+          <Property Name="NombreEquipo" Type="varchar" MaxLength="255" />
+        </EntityType>
         <EntityType Name="uniCanvasNotas">
           <Key>
             <PropertyRef Name="ID" />
@@ -30,11 +40,14 @@
           <Property Name="NroMensaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="CantNotas" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="255" />
+          <Property Name="NombreEquipo" Type="varchar" MaxLength="255" />
         </EntityType>
         <Function Name="sp_uni_canvas_delete_from_ID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fromId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="UniModelStoreContainer">
+          <EntitySet Name="uniCanvasColaAuditoria" EntityType="Self.uniCanvasColaAuditoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniCanvasNotas" EntityType="Self.uniCanvasNotas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniCanvasNotasAuditoria" EntityType="Self.uniCanvasNotasAuditoria" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -47,8 +60,9 @@
           <Parameter Name="fromId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="uniCanvasNotas" EntityType="UniModel.uniCanvasNotas" />
+          <EntitySet Name="uniCanvasColaAuditoria" EntityType="UniModel.uniCanvasColaAuditoria" />
           <EntitySet Name="uniCanvasNotasAuditoria" EntityType="UniModel.uniCanvasNotasAuditoria" />
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="uniCanvasNotas">
           <Key>
             <PropertyRef Name="ID" />
@@ -67,6 +81,16 @@
           <Property Name="Procesado" Type="Boolean" />
           <Property Name="Mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="uniCanvasColaAuditoria">
+          <Key>
+            <PropertyRef Name="IdColaAuditoria" />
+          </Key>
+          <Property Name="IdColaAuditoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CantMensajes" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NombreEquipo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="uniCanvasNotasAuditoria">
           <Key>
             <PropertyRef Name="NroMensaje" />
@@ -74,8 +98,10 @@
           <Property Name="NroMensaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CantNotas" Type="Int32" Nullable="false" />
+          <Property Name="Usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NombreEquipo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -101,16 +127,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="uniCanvasColaAuditoria">
+            <EntityTypeMapping TypeName="UniModel.uniCanvasColaAuditoria">
+              <MappingFragment StoreEntitySet="uniCanvasColaAuditoria">
+                <ScalarProperty Name="NombreEquipo" ColumnName="NombreEquipo" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="CantMensajes" ColumnName="CantMensajes" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="IdColaAuditoria" ColumnName="IdColaAuditoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="uniCanvasNotasAuditoria">
             <EntityTypeMapping TypeName="UniModel.uniCanvasNotasAuditoria">
               <MappingFragment StoreEntitySet="uniCanvasNotasAuditoria">
+                <ScalarProperty Name="NombreEquipo" ColumnName="NombreEquipo" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="CantNotas" ColumnName="CantNotas" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="NroMensaje" ColumnName="NroMensaje" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

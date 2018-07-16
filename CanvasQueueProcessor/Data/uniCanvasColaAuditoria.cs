@@ -12,11 +12,11 @@ namespace CanvasQueueProcessor.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class uniCanvasNotasAuditoria
+    public partial class uniCanvasColaAuditoria
     {
-        public int NroMensaje { get; set; }
-        public System.DateTime FechaCreacion { get; set; }
-        public int CantNotas { get; set; }
+        public int IdColaAuditoria { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public int CantMensajes { get; set; }
         public string Usuario { get; set; }
         public string NombreEquipo { get; set; }
     }

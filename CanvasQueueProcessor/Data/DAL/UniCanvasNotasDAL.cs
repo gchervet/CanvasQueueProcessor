@@ -84,13 +84,15 @@ namespace CanvasQueueProcessor.Data.DAL
             }
         }
 
-        public static void CreateAuditoria(int cantNotas)
+        public static void CreateEntryAuditoria(string machineName, string userName, int cantNotas)
         {
             using (var context = new dev_UniEntities())
             {
                 uniCanvasNotasAuditoria uniCanvasNotasAuditoriaToAdd = new uniCanvasNotasAuditoria();
                 uniCanvasNotasAuditoriaToAdd.FechaCreacion = DateTime.Now;
                 uniCanvasNotasAuditoriaToAdd.CantNotas = cantNotas;
+                uniCanvasNotasAuditoriaToAdd.NombreEquipo = machineName;
+                uniCanvasNotasAuditoriaToAdd.Usuario = userName;
 
                 context.uniCanvasNotasAuditoria.Add(uniCanvasNotasAuditoriaToAdd);
 
@@ -98,10 +100,35 @@ namespace CanvasQueueProcessor.Data.DAL
                 {
                     context.SaveChanges();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-
+                    return;
                 }
+                return;
+            }
+        }
+
+        internal static void CreateGeneralAuditoria(string machineName, string userName, int cantMensajes)
+        {
+            using (var context = new dev_UniEntities())
+            {
+                uniCanvasColaAuditoria uniCanvasColaAuditoria = new uniCanvasColaAuditoria();
+                uniCanvasColaAuditoria.CantMensajes = cantMensajes;
+                uniCanvasColaAuditoria.FechaInicio = DateTime.Now;
+                uniCanvasColaAuditoria.NombreEquipo = machineName;
+                uniCanvasColaAuditoria.Usuario = userName;
+
+                context.uniCanvasColaAuditoria.Add(uniCanvasColaAuditoria);
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return;
+                }
+                return;
             }
         }
     }

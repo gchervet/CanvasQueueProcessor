@@ -70,19 +70,24 @@ namespace CanvasQueueProcessor.Service
             return true;
         }
 
+        internal static void CreateGeneralAuditoria(string machineName, string userName, uint messageCount)
+        {
+            UniCanvasNotasDAL.CreateGeneralAuditoria(machineName, userName, (int)messageCount);
+        }
+
         public static void RollBackFromId(int pkID)
         {
             UniCanvasNotasDAL.RollBackFromId(pkID);
         }
 
-        internal static void CreateAuditoria(Entries entries)
+        internal static void CreateEntryAuditoria(string machineName, string userName, Entries entries)
         {
             int cantNotas = 0;
             if (entries != null)
             {
                 cantNotas = entries.entry.Count();
             }
-            UniCanvasNotasDAL.CreateAuditoria(cantNotas);
+            UniCanvasNotasDAL.CreateEntryAuditoria(machineName, userName, cantNotas);
         }
     }
 }
