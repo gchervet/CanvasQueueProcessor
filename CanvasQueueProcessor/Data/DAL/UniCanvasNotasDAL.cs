@@ -102,6 +102,7 @@ namespace CanvasQueueProcessor.Data.DAL
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine("\nERROR: CreateEntryAuditoria\n" + e.Message);
                     return;
                 }
                 return;
@@ -126,6 +127,7 @@ namespace CanvasQueueProcessor.Data.DAL
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine("\nERROR: CreateGeneralAuditoria\n" + e.Message);
                     return;
                 }
                 return;

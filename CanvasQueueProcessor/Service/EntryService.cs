@@ -85,7 +85,10 @@ namespace CanvasQueueProcessor.Service
             int cantNotas = 0;
             if (entries != null)
             {
-                cantNotas = entries.entry.Count();
+                if (entries.entry != null)
+                {
+                    cantNotas = entries.entry.Count();
+                }
             }
             UniCanvasNotasDAL.CreateEntryAuditoria(machineName, userName, cantNotas);
         }

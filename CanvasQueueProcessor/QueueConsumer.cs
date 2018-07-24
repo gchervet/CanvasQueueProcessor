@@ -28,7 +28,7 @@ namespace CanvasQueueProcessor
 
             QueueConsumerExample qConsumer = new QueueConsumerExample();
             //qConsumer.GetMessage();
-            Environment.Exit(qConsumer.Register());
+            qConsumer.Register();
 
             /* TESTING (local JSON) */
             //using (StreamReader r = new StreamReader("../../Domain/TestingJSON/entry_list_full.json"))
@@ -40,13 +40,11 @@ namespace CanvasQueueProcessor
             //}
         }
 
-        public int Register()
+        public void Register()
         {
             //Setup the connection with the message broker
 
             //////////////////
-            FileStream ostrm;
-            StreamWriter writer;
             TextWriter oldOut = Console.Out;
             /////////////////
 
@@ -67,7 +65,8 @@ namespace CanvasQueueProcessor
 
             if (messageCount == 0)
             {
-                return 0;
+                EntryService.CreateEntryAuditoria(Environment.MachineName, Environment.UserName, new Entries());
+                Environment.Exit(0);
             }
             else
             {
@@ -91,11 +90,10 @@ namespace CanvasQueueProcessor
 
                 if (messageCountIndex == messageCount)
                 {
-                    return 0;
+                    Environment.Exit(0);
                 }
                 String consumerTag = channel.BasicConsume(queueName, false, consumer);
             }
-            return 0;
         }
 
         public uint GetMessageCount(ConnectionFactory factory, string queueName)
