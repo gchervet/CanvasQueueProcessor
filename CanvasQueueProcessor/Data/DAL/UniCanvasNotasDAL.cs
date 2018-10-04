@@ -46,7 +46,7 @@ namespace CanvasQueueProcessor.Data.DAL
                 {
                     uniCanvasNotas uniCanvasNotasToAdd = new uniCanvasNotas();
 
-                    uniCanvasNotasToAdd.Activity = entry.activity_name;
+                    uniCanvasNotasToAdd.Activity = entry.activity_name != null ? entry.activity_name.Trim(): string.Empty;
                     uniCanvasNotasToAdd.Attempt = entry.attempt;
                     uniCanvasNotasToAdd.EnrollmentId = entry.enrollmentId;
                     uniCanvasNotasToAdd.FechaCreacion = DateTime.Now;
